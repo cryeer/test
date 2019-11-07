@@ -25,19 +25,17 @@
         // console.log(characteristic)
         // let value = await characteristic.readValue();
         // console.log(value)
-        console.log(navigator.bluetooth.requestDevice({
-            filters: [ 
-                { namePrefix: 'FeiZhiX8/X8Pro' } 
-            ],
-            optionalServices: [ 0x180A, 0x1812, 0x2A26, 0x2A50, 0x2A29, ]
-        })
-        .then(device => {
-            console.log(device)
-            return device.gatt.connect()
-        }))
         console.log(navigator.bluetooth.requestDevice({ filters: [ 
             { namePrefix: 'FeiZhiX8/X8Pro' } 
-        ] })
+        ],
+        optionalServices: [
+            0x180A,
+            // 0x180A, 0x1812, 0x2A26, 0x2A50, 0x2A29
+            // '6E400001-B5A3-F393-E0A9-E50E24DCCA9E',
+            // '00001000-E619-419B-BC43-821E71A409B7',
+            '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
+            '00001000-e619-419b-bc43-821e71a409b7'
+            ] })
         .then(device => {
             console.log(device)
             return device.gatt.connect()
@@ -45,13 +43,12 @@
         .then(server => {
         // Getting Battery Service...
         console.log(1, server)
-        console.log(1, server.getPrimaryService(0x180A))
-        return server.getPrimaryService('8dfb8a63-749f-6a15-ce06-6054bc44fc1d');
+        return server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e');
         })
         .then(service => {
         // Getting Battery Level Characteristic...
         console.log(2, service)
-        return service.getCharacteristic(0x2A26);
+        return service.getCharacteristic('6e400001-b5a3-f393-e0a9-e50e24dcca9e');
         })
         .then(characteristic => {
         // Reading Battery Level...
